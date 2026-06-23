@@ -17,24 +17,36 @@ if _dotenv_path.exists():
                 _k, _, _v = _line.partition("=")
                 os.environ.setdefault(_k.strip(), _v.strip())
 
+_TELECOM_DIR = _APP_ROOT.parent / "data" / "telecom"  # fallback default
+
 RESOURCES_DIR = _APP_ROOT / "resources"
+
+# Pull data paths from st.secrets if not already set via .env / environment
+try:
+    import streamlit as st
+    _data_secrets = st.secrets.get("data", {})
+    for _var in ("CONVERSATIONS_PATH", "PREDICTIONS_PATH", "NORMS_PATH", "PROPS_PATH"):
+        if _var in _data_secrets:
+            os.environ.setdefault(_var, _data_secrets[_var])
+except Exception:
+    pass
 
 # Data source paths — override with env vars
 DEFAULT_CONVERSATIONS_PATH = os.environ.get(
     "CONVERSATIONS_PATH",
-    str(RESOURCES_DIR / "conversations.json"),
+    str(_TELECOM_DIR / "conversations.json"),
 )
 DEFAULT_PREDICTIONS_PATH = os.environ.get(
     "PREDICTIONS_PATH",
-    str(RESOURCES_DIR / "ap_predictions.json"),
+    str(_TELECOM_DIR / "predictions" / "ap_predictions.json"),
 )
 DEFAULT_NORMS_PATH = os.environ.get(
     "NORMS_PATH",
-    str(RESOURCES_DIR / "norms.json"),
+    str(_TELECOM_DIR / "norms.json"),
 )
 DEFAULT_PROPS_PATH = os.environ.get(
     "PROPS_PATH",
-    str(RESOURCES_DIR / "propositions.json"),
+    str(_TELECOM_DIR / "propositions.json"),
 )
 
 # Deepseek labeler ID for telecom ap_predictions.json (deepseek-r1-0528/sensor/-/none)
