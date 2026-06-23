@@ -17,26 +17,24 @@ if _dotenv_path.exists():
                 _k, _, _v = _line.partition("=")
                 os.environ.setdefault(_k.strip(), _v.strip())
 
-_TELECOM_DIR = _APP_ROOT.parent / "data" / "telecom"  # fallback default
-
 RESOURCES_DIR = _APP_ROOT / "resources"
 
 # Data source paths — override with env vars
 DEFAULT_CONVERSATIONS_PATH = os.environ.get(
     "CONVERSATIONS_PATH",
-    str(_TELECOM_DIR / "conversations.json"),
+    str(RESOURCES_DIR / "conversations.json"),
 )
 DEFAULT_PREDICTIONS_PATH = os.environ.get(
     "PREDICTIONS_PATH",
-    str(_TELECOM_DIR / "predictions" / "ap_predictions.json"),
+    str(RESOURCES_DIR / "ap_predictions.json"),
 )
 DEFAULT_NORMS_PATH = os.environ.get(
     "NORMS_PATH",
-    str(_TELECOM_DIR / "norms.json"),
+    str(RESOURCES_DIR / "norms.json"),
 )
 DEFAULT_PROPS_PATH = os.environ.get(
     "PROPS_PATH",
-    str(_TELECOM_DIR / "propositions.json"),
+    str(RESOURCES_DIR / "propositions.json"),
 )
 
 # Deepseek labeler ID for telecom ap_predictions.json (deepseek-r1-0528/sensor/-/none)
