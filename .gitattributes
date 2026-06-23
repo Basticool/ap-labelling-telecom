@@ -1,0 +1,7 @@
+resources/conversations.json filter=lfs diff=lfs merge=lfs -text
+resources/jobs filter=lfs diff=lfs merge=lfs -text
+resources/labels filter=lfs diff=lfs merge=lfs -text
+resources/norms.json filter=lfs diff=lfs merge=lfs -text
+resources/propositions.json filter=lfs diff=lfs merge=lfs -text
+resources/users.jsonl filter=lfs diff=lfs merge=lfs -text
+resources/ap_predictions.json filter=lfs diff=lfs merge=lfs -text
