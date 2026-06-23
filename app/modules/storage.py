@@ -120,7 +120,15 @@ def read_jsonl(path: str | Path) -> list[dict]:
         content, _ = _gh_get(path)
         if not content:
             return []
-        return [json.loads(line) for line in content.splitlines() if line.strip()]
+        result = []
+        for line in content.splitlines():
+            line = line.strip()
+            if line:
+                try:
+                    result.append(json.loads(line))
+                except json.JSONDecodeError:
+                    pass
+        return result
     path = Path(path)
     if not path.exists():
         return []
